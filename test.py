@@ -1,39 +1,7 @@
 import unittest
 import random as rn
-from pymongo import MongoClient
 from pymongo import results
-
-
-class DataBase:
-
-    def __init__(p):
-        cluster = MongoClient(
-            "mongodb+srv://annv:polol2461@cluster0.082c6.mongodb.net/test")
-        p.db = cluster["quiz"]  # коллекция
-        p.students = p.db["test"]
-        p.questions = p.db["que"]
-        p.NumberOfQuestions = len(list(p.questions.find({})))  # количество вопросов
-
-    def GetStudent(p, userID):
-        student = p.students.find_one({"ChatId": userID})
-        if student is not None:
-            return student
-        student = {
-            "ChatId": userID,
-            "goes": False,
-            "completed": False,
-            "QuestionNumber": None,
-            "answers": []
-        }
-        p.students.insert_one(student)
-        return student
-
-    def setStudent(p, userID, update):
-        p.students.update_one({"ChatId": userID}, {"$set": update})
-
-    def get_question(p, index):
-        return p.questions.find_one({"id": index})
-
+from Bot import DataBase
 
 class TestDataBase(unittest.TestCase):
 
