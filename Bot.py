@@ -1,11 +1,5 @@
 import telebot
 from pymongo import MongoClient
-
-# bot = telebot.TeleBot("5066340184:AAGkeGBDsh34ciC7M7Kx6jhAM9bx6PZvBEw")
-
-
-import telebot
-from pymongo import MongoClient
 bot = telebot.TeleBot("5085761069:AAFZTQgpke3uSilS4xdhSDMj18arwYdsGJI")
 class DataBase:
 	def __init__(p):
