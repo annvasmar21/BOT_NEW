@@ -1,9 +1,11 @@
 import telebot
 from pymongo import MongoClient
-bot = telebot.TeleBot("")
+from pathlib import Path
+bot = telebot.TeleBot(token=Path('token.txt').read_text().strip())
 class DataBase:
 	"""
-	Экземпляр этого класса получается из DbContext объекта и может использоваться для управления фактической базой данных резервной копии DbContext или соединения.
+	Экземпляр этого класса получается из DbContext объекта и может использоваться
+	для управления фактической базой данных резервной копии DbContext или соединения.
 	В частности, поддерживается создание, удаление и проверка наличия базы данных.
 	"""
 	def __init__(p):
