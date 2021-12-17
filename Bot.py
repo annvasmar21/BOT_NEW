@@ -1,6 +1,6 @@
 import telebot
 from pymongo import MongoClient
-bot = telebot.TeleBot("5085761069:AAFZTQgpke3uSilS4xdhSDMj18arwYdsGJI")
+bot = telebot.TeleBot("")
 class DataBase:
 	def __init__(p):
 		""" Функция Init это метод класса, нужен для того чтобы при создании объекта db выражением
@@ -97,7 +97,7 @@ def Get_A_Reply_Message(student):
 	:param student:
 	:return: Ответ пользователю
 	"""
-	question = db.GiveAQuestion(student["QuestionNumber"]) #заимствованый код
+	question = db.GiveAQuestion(student["QuestionNumber"])
 	text = f"Вопрос №{student['QuestionNumber'] + 1}\n\n{question['question']}\n"
 	for ResponseNumber, answer in enumerate(question["answers"]):
 		text += f"{chr( 97 + ResponseNumber)}) {answer}"
@@ -110,7 +110,7 @@ def Get_A_Reply_Message(student):
 	keyboard.row(telebot.types.InlineKeyboardButton("Перейти на следующий шаг", callback_data="?next"))
 	return {
 		"question": text,
-		"keyboard": keyboard #заимствованый код
+		"keyboard": keyboard
 	}
 @bot.message_handler(commands=["start"])
 def start(message):
