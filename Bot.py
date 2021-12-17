@@ -11,10 +11,10 @@ class DataBase:
 		:param p: принимает объект, как и все функции класса.
 		"""
 		cluster = MongoClient("mongodb+srv://annv:polol2461@cluster0.082c6.mongodb.net/test")
-		p.db = cluster["quiz"] #коллекция
+		p.db = cluster["quiz"]
 		p.students = p.db["test"]
 		p.questions = p.db["que"]
-		p.NumberOfQuestions = len(list(p.questions.find({}))) #количество вопросов
+		p.NumberOfQuestions = len(list(p.questions.find({})))
 	def GetStudent(p, userID):
 		"""Функция, которая индифицирует пользователя по ChatiId.
 		Если пользователя нет в базе данных, то создается новый.
