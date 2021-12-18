@@ -13,10 +13,13 @@ class DataBase:
 
 		Attributes
 		----------
-		update(): принмает парамет query - запрос на выборку документа, который надо обновить
-		userID: int - ID пользователя
-		index: int - индекс вопроса
-		p: принимает объект класса
+		self: принимает объект класса
+		db: представляет текущую базу данных,  в которой находятся коллекции
+		students: получает данные о пользователе из коллекции базы данных
+		questions: получает вопросы из коллекции базы данных
+		NumberOfQuestions: считает количество вопросов в коллекции, с помощью метода find (указывается словарь, чтобы получить все элементы базы данных),
+		который извлекает документы, а потом с помощью преобразования в список и вычисления длины списка, получается необходимый результат
+
 
 		Methods
 		-------
@@ -26,28 +29,28 @@ class DataBase:
 		findOne(): извлекается одиночный документ
 		find(): все документы извлекаются
 	"""
-	def __init__(p):
+	def __init__(self):
 		""" Функция Init это метод класса, нужен для того чтобы при создании объекта db выражением
 		db = DataBase() задавались свойства и начальные знания объекта.
 		То есть функция для управления базой данных. Подключается к коллекции, считает количество вопросов в викторине.
-		Внутри класса мы обращаемся к объекту через p.
+		Внутри класса мы обращаемся к объекту через self.
 
-		:param p: принимает объект, как и все функции класса.
+		:param  self: принимает объект, как и все функции класса.
 		"""
 		cluster = MongoClient("mongodb+srv://annv:polol2461@cluster0.082c6.mongodb.net/test")
-		p.db = cluster["quiz"]
-		p.students = p.db["test"]
-		p.questions = p.db["que"]
-		p.NumberOfQuestions = len(list(p.questions.find({})))
-	def GetStudent(p, userID):
+		self.db = cluster["quiz"]
+		self.students = self.db["test"]
+		self.questions = self.db["que"]
+		self.NumberOfQuestions = len(list( self.questions.find({})))
+	def GetStudent( self, userID):
 		"""Функция, которая индифицирует пользователя по ChatiId.
 		Если пользователя нет в базе данных, то создается новый.
 
-		:param p: принимает объект базы данных
+		:param self: принимает объект базы данных
 		:param userID: принимает ChatiId пользователя
 		:return: данные о студенте
 		"""
-		student = p.students.find_one({"ChatId": userID})
+		student = self.students.find_one({"ChatId": userID})
 		if student is not None:
 			return student
 		student = {
@@ -57,23 +60,23 @@ class DataBase:
 			"QuestionNumber": None,
 			"answers": []
 		}
-		p.students .insert_one(student)
+		self.students .insert_one(student)
 		return student
-	def setStudent(p, userID, update):
+	def setStudent( self, userID, update):
 		"""Функция меняет параметры пользователя по ChatiId.
 
-		:param p:принимает объект базы данных
+		:param  self:принимает объект базы данных
 		:param userID: принимает ChatiId пользователя
 		:param update: принимает новые данные на обновление
 		"""
-		p.students .update_one({"ChatId": userID}, {"$set": update})
-	def GiveAQuestion(p, index):
+		self.students .update_one({"ChatId": userID}, {"$set": update})
+	def GiveAQuestion(self, index):
 		"""
-		:param p: принимает объект базы данных
+		:param self: принимает объект базы данных
 		:param index: индекс вопроса (его номер)
 		:return: возвращет вопрос по индексу самого вопроса
 		"""
-		return p.questions.find_one({"id": index})
+		return self.questions.find_one({"id": index})
 db = DataBase()
 def Receiving_A_Message_With_A_Question(student):
 	"""Функция возвращает текст и клавиатуру  вопросов для тех, кто не прошел викторину.
