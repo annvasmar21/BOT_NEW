@@ -41,5 +41,6 @@ class TestDataBase(unittest.TestCase):
             self.assertEqual(results.DeleteResult, type(self.d))
 
 
+
 if __name__ == '__main__':
     unittest.main()
