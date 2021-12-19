@@ -92,7 +92,7 @@ def Receiving_A_Message_With_A_Question(student):
 			estimation = "- отлично"
 		text = f"Ваша оценка {estimation}. Процент выполненой верно работы {result}%."
 
-		db.setStudent(student["ChatId"], {"goes": True, "completed": False})
+		db.setStudent(student["ChatId"], {"goes": False, "completed": True})
 		return {
 			"question": text, "keyboard": None }
 	question = db.GiveAQuestion(student["QuestionNumber"])
